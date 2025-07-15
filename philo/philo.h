@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:36:05 by anavagya          #+#    #+#             */
-/*   Updated: 2025/07/12 17:44:59 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/07/15 17:02:43 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,25 @@
 
 typedef struct s_philo
 {
-	int				id;
-	pthread_t		*thread;
-	pthread_mutex_t	*left_fork;
-	pthread_mutex_t	*right_fork;
-	t_data			*data;
+	int			id;
+	int			meal_count;
+	long		last_meal;
+	int			left_fork;
+	int			right_fork;
+	pthread_t	thread;
+	pthread_mutex_t meal_time_mutex;
+	t_data		*data;
 }	t_philo;
 
 typedef struct s_data
 {
-	int		philo_num;
-	int		time_to_die;
-	int		time_to_eat;
-	int		time_to_sleep;
-	int		eat_count;
-	int		start_time;
+	int			philo_num;
+	int			time_to_die;
+	int			time_to_eat;
+	int			time_to_sleep;
+	int			must_eat_count;
+	int			start_time;
+	pthread_t		is_dead;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	*print_mutex;
 
@@ -43,13 +47,17 @@ typedef struct s_data
 
 }	t_data;
 
+// utils.c
+long	get_time_in_ms(void);
+
 // validation.c
-int		ft_strlen(char *str);
 int		ft_atoi(const char *str);
+//int		ft_strlen(char *str);
 int		validation(int argc, char *argv);
 
 // main.c
 void	init(t_philo *philo, t_data *data, char **argv);
+void	creating_threads(t_data *data);
 void	*philosopher(void *arg);
 
 #endif
