@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:36:05 by anavagya          #+#    #+#             */
-/*   Updated: 2025/07/15 17:02:43 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/07/17 16:34:31 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ typedef struct s_data
 	int			time_to_sleep;
 	int			must_eat_count;
 	int			start_time;
-	pthread_t		is_dead;
+	pthread_t		philo_is_dead;
+	pthread_mutex_t	sleep;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	*print_mutex;
 
@@ -48,6 +49,7 @@ typedef struct s_data
 }	t_data;
 
 // utils.c
+void	print_status(t_data *data, char *msg);
 long	get_time_in_ms(void);
 
 // validation.c
