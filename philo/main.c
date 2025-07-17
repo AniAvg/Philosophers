@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:34:54 by anavagya          #+#    #+#             */
-/*   Updated: 2025/07/15 17:04:38 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/07/17 17:59:11 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	init(t_philo *philo, t_data *data, char **argv)
 	philo->data->forks = malloc(sizeof(pthread_mutex_t) * data->philo_num);
 	if (!philo->data->forks)
 		return ;
-	i =0;
+	i = 0;
 	while (i < data->philo_num)
 	{
 		if (pthread_mutex_init(&(data->forks), NULL) != 0)
@@ -30,7 +30,6 @@ void	init(t_philo *philo, t_data *data, char **argv)
 	}
 	if (pthread_mutex_init(&(data->print_mutex), NULL) != 0)
 		return ;
-
 	data->philo_num = ft_atoi(argv[1]);
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_eat = ft_atoi(argv[3]);
@@ -46,11 +45,11 @@ void	pick_up_forks(t_philo *philo, t_data *data)
 	philo->left_fork = philo->id;
 	if (philo->id == (data->philo_num - 1))
 		philo->right_fork = 0;
-	philo->right_fork = philo->id + 1;
+	else
+		philo->right_fork = philo->id + 1;
 	pthread_mutex_lock(&(data->forks[philo->left_fork]));
 	pthread_mutex_lock(&(data->forks[philo->right_fork]));
-	// print
-	// print
+	print_status(philo, "has taken a fork");
 }
 
 void	philo_eat(t_philo *philo)
@@ -59,14 +58,40 @@ void	philo_eat(t_philo *philo)
 	philo->last_meal = get_time_in_ms();
 	philo->meal_count++;
 	pthread_mutex_unlock(&(philo->meal_time_mutex));
+	print_status(philo->data, "is eating");
 }
 
-void	put_down_forks(t_philo *philo, t_data *data)
+void	put_down_forks(t_philo *philo, t_data *data, long ms)
 {
+	long	time;
+
 	pthread_mutex_unlock(&(data->forks[philo->right_fork]));
 	pthread_mutex_unlock(&(data->forks[philo->left_fork]));
+	print_status(philo, "puts down forks");
+	time = get_time_in_ms();
+	while (get_time_in_ms() - time < ms)
+		usleep(100);
 }
 
+void	philo_sleep(t_philo *philo, long ms)
+{
+	long	time;
+
+	time = get_time_in_ms();
+	print_status(philo, "is sleeping");
+	while (get_time_in_ms() - time < ms)
+		usleep(100);
+}
+
+void	philo_think(t_philo *philo, long ms)
+{
+	long	time;
+
+	print_status(philo, "is thinking");
+	time = get_time_in_ms();
+	while (get_time_in_ms() - time < ms)
+		usleep(100);
+}
 
 void	*philosopher(void *arg)
 {
@@ -81,8 +106,8 @@ void	*philosopher(void *arg)
 		pick_up_forks(philo, data);
 		philo_eat(philo);
 		put_down_forks(philo, data);
-		philo_sleep();
-		philo_think();
+		philo_sleep(philo, ms);
+		philo_think(philo, ms);
 	}
 }
 

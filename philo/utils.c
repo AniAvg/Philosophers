@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 16:19:09 by anavagya          #+#    #+#             */
-/*   Updated: 2025/07/17 17:30:57 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/07/17 18:01:24 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	print_status(t_philo *philo, char *msg)
 		printf("%ld %d %s\n", timestamp, philo->data->philo->id + 1, msg);
 	pthread_mutex_unlock(&philo->data->print_mutex);
 }
+
 long	get_time_in_ms(void)
 {
 	struct timeval	time;
