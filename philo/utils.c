@@ -6,23 +6,22 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 16:19:09 by anavagya          #+#    #+#             */
-/*   Updated: 2025/07/17 16:33:27 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/07/17 17:30:57 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	print_status(t_data *data, char *msg)
+void	print_status(t_philo *philo, char *msg)
 {
 	long	timestamp;
 
-	pthread_mutex_lock(&data->print_mutex);
-	timestamp = get_time_in_ms() - data->start_time;
-	if (!data->philo_is_dead)
-	printf("%ld %d %s\n", timestamp, data->philo->id, msg);
-	pthread_mutex_unlock(&data->print_mutex);
+	pthread_mutex_lock(&philo->data->print_mutex);
+	timestamp = get_time_in_ms() - philo->data->start_time;
+	if (!philo->data->philo_is_dead)
+		printf("%ld %d %s\n", timestamp, philo->data->philo->id + 1, msg);
+	pthread_mutex_unlock(&philo->data->print_mutex);
 }
-
 long	get_time_in_ms(void)
 {
 	struct timeval	time;

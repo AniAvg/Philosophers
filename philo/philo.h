@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:36:05 by anavagya          #+#    #+#             */
-/*   Updated: 2025/07/17 16:34:31 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/07/17 17:51:48 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,24 @@
 
 typedef struct s_philo
 {
-	int			id;
-	int			meal_count;
-	long		last_meal;
-	int			left_fork;
-	int			right_fork;
-	pthread_t	thread;
+	int				id;
+	int				meal_count;
+	long			last_meal;
+	int				left_fork;
+	int				right_fork;
+	pthread_t		thread;
 	pthread_mutex_t meal_time_mutex;
-	t_data		*data;
+	t_data			*data;
 }	t_philo;
 
 typedef struct s_data
 {
-	int			philo_num;
-	int			time_to_die;
-	int			time_to_eat;
-	int			time_to_sleep;
-	int			must_eat_count;
-	int			start_time;
+	int				philo_num;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				must_eat_count;
+	int				start_time;
 	pthread_t		philo_is_dead;
 	pthread_mutex_t	sleep;
 	pthread_mutex_t	*forks;
@@ -49,7 +49,7 @@ typedef struct s_data
 }	t_data;
 
 // utils.c
-void	print_status(t_data *data, char *msg);
+void	print_status(t_philo *philo, char *msg);
 long	get_time_in_ms(void);
 
 // validation.c
