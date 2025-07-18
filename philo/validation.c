@@ -6,11 +6,41 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 14:33:48 by anavagya          #+#    #+#             */
-/*   Updated: 2025/07/17 18:01:12 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/07/18 17:18:42 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	ft_strlen(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+
+int	is_digit(int argc, char **argv)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (i < argc)
+	{
+		while (j < ft_strlen(argv[i]))
+		{
+			if (argv[i][j] < 48 && argv[i][j] > 57)
+				return (0);
+			j++;
+		}
+		i++;
+	}
+	return (1);
+}
 
 int	ft_atoi(const char *str)
 {
@@ -35,22 +65,26 @@ int	ft_atoi(const char *str)
 	return (result);
 }
 
-int	validation(int argc, char *argv)
+int	validation(int argc, char **argv)
 {
 	int	i;
 
 	i = 1;
-	if (argc != 5 || argc != 6)
+	if (argc < 5 || argc > 6)
 		return (0);
 	// num_arr = (int *)malloc(sizeof(int) * (argc - 1));
 	// if (!num_arr)
 	// 	return (0);
 	if (!is_digit(argc, argv))
+	{
 		return (0);
+	}
 	while (i < argc)
 	{
 		if (ft_atoi(argv[i]) == 0)
+		{
 			return (0);
+		}
 		i++;
 	}
 	return (1);

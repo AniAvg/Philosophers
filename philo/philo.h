@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:36:05 by anavagya          #+#    #+#             */
-/*   Updated: 2025/07/17 18:02:29 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/07/18 17:42:16 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,12 @@
 # define PHILO_H
 
 # include <stdio.h>
+# include <unistd.h>
 # include <stdlib.h>
 # include <pthread.h>
 # include <sys/time.h>
+
+typedef struct s_data	t_data;
 
 typedef struct s_philo
 {
@@ -42,7 +45,6 @@ typedef struct s_data
 	pthread_mutex_t	sleep;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	*print_mutex;
-	// int		*num_array;
 	t_philo			*philo;
 }	t_data;
 
@@ -51,16 +53,17 @@ void	print_status(t_philo *philo, char *msg);
 long	get_time_in_ms(void);
 
 // validation.c
+int		ft_strlen(char *str);
+int		is_digit(int argc, char **argv);
 int		ft_atoi(const char *str);
-//int		ft_strlen(char *str);
-int		validation(int argc, char *argv);
+int		validation(int argc, char **argv);
 
 // main.c
 void	init(t_philo *philo, t_data *data, char **argv);
 void	creating_threads(t_data *data);
 void	pick_up_forks(t_philo *philo, t_data *data);
 void	philo_eat(t_philo *philo);
-void	put_down_forks(t_philo *philo, t_data *data, long ms);
+void	put_down_forks(t_philo *philo, t_data *data);//, long ms);
 void	philo_sleep(t_philo *philo, long ms);
 void	philo_think(t_philo *philo, long ms);
 void	*philosopher(void *arg);

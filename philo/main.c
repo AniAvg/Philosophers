@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:34:54 by anavagya          #+#    #+#             */
-/*   Updated: 2025/07/17 17:59:11 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/07/18 18:18:29 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,12 @@ void	init(t_philo *philo, t_data *data, char **argv)
 {
 	int	i;
 
-	philo->thread = malloc(sizeof(pthread_t) * data->philo_num);
-	if (!philo->thread)
+	data->forks = malloc(sizeof(pthread_mutex_t) * data->philo_num);
+	if (!data->forks)
 		return ;
-	philo->data->forks = malloc(sizeof(pthread_mutex_t) * data->philo_num);
-	if (!philo->data->forks)
+	if (pthread_mutex_init(data->print_mutex, NULL) != 0)
 		return ;
-	i = 0;
-	while (i < data->philo_num)
-	{
-		if (pthread_mutex_init(&(data->forks), NULL) != 0)
-			return ;
-	}
-	if (pthread_mutex_init(&(data->print_mutex), NULL) != 0)
-		return ;
+	// init program arguments
 	data->philo_num = ft_atoi(argv[1]);
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_eat = ft_atoi(argv[3]);
@@ -38,6 +30,21 @@ void	init(t_philo *philo, t_data *data, char **argv)
 		data->must_eat_count = ft_atoi(argv[5]);
 	else
 		data->must_eat_count = 0;
+	data->philo = malloc(sizeof(pthread_t) * data->philo_num);
+	// init data arguments
+	data->start_time = 0;
+	// init philo arguments
+	i = 0;
+	while ( i < data->philo_num)
+	{
+		if (pthread_mutex_init(&(data->philo[i].meal_time_mutex), NULL) != 0
+			|| pthread_mutex_init(&(data->forks[i]), NULL) != 0 )
+				return ;
+		data->philo[i].id = i;
+		data->philo[i].meal_count = 0;
+		data->philo[i].last_meal = 0;
+		i++;
+	}
 }
 
 void	pick_up_forks(t_philo *philo, t_data *data)
@@ -58,19 +65,19 @@ void	philo_eat(t_philo *philo)
 	philo->last_meal = get_time_in_ms();
 	philo->meal_count++;
 	pthread_mutex_unlock(&(philo->meal_time_mutex));
-	print_status(philo->data, "is eating");
+	print_status(philo, "is eating");
 }
 
-void	put_down_forks(t_philo *philo, t_data *data, long ms)
+void	put_down_forks(t_philo *philo, t_data *data)//, long ms)
 {
-	long	time;
+	//long	time;
 
 	pthread_mutex_unlock(&(data->forks[philo->right_fork]));
 	pthread_mutex_unlock(&(data->forks[philo->left_fork]));
 	print_status(philo, "puts down forks");
-	time = get_time_in_ms();
-	while (get_time_in_ms() - time < ms)
-		usleep(100);
+	// time = get_time_in_ms();
+	// while (get_time_in_ms() - time < ms)
+		// usleep(100);
 }
 
 void	philo_sleep(t_philo *philo, long ms)
@@ -96,18 +103,17 @@ void	philo_think(t_philo *philo, long ms)
 void	*philosopher(void *arg)
 {
 	t_philo	*philo;
-	t_data	*data;
 
 	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
 		usleep(1000);
 	while (1)
 	{
-		pick_up_forks(philo, data);
+		pick_up_forks(philo, philo->data);
 		philo_eat(philo);
-		put_down_forks(philo, data);
-		philo_sleep(philo, ms);
-		philo_think(philo, ms);
+		put_down_forks(philo, philo->data);//, data->time_to_sleep);
+		philo_sleep(philo, philo->data->time_to_sleep);
+		philo_think(philo, 1);
 	}
 }
 
@@ -119,24 +125,28 @@ void	creating_threads(t_data *data)
 	data->start_time = get_time_in_ms() + 100;
 	while (i < data->philo_num)
 	{
-		if (pthread_create(&data->philo, NULL, philosopher, NULL) != 0)
+		if (pthread_create(&data->philo->thread, NULL, philosopher, NULL) != 0)
 			return ;
-		if (pthread_join(data->philo, NULL) != 0)
+		if (pthread_join(data->philo->thread, NULL) != 0)
 			return ;
 		i++;
 	}
 }
 
-int	main(int argc, char *argv)
+int	main(int argc, char **argv)
 {
 	t_data	*data;
-	t_philo	*philo;
 
 	data = malloc(sizeof(t_data));
 	if (!data)
 		return (1);
 	if (!validation(argc, argv))
+	{
+		free(data);
+		free(philo);
+		write(2, "Error\n", 6);
 		return (1);
+	}
 	init(philo, data, argv);
 	creating_threads(data);
 	return (0);

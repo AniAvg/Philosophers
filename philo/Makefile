@@ -1,28 +1,26 @@
 NAME = philo
 
-SRC_FILES = validation.c main.c
+SRCS = validation.c utils.c main.c
 
-SRCS = $(addprefix ./philo/, $(SRC_FILES))
+#SRCS = $(addprefix ./philo/, $(SRC_FILES))
 
 OBJS = $(SRCS:.c=.o)
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
-
+CFLAGS = -Wall -Wextra -Werror -g3
 
 all : $(NAME)
 
-$(NAME) : $(OBJS) $(LIBFT)
+$(NAME) : $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
-%.o: %.c
+%.o: %.c philo.h
 	$(CC) $(CFLAGS)  -c -o $@ $<
 
 clean :
 	rm -f $(OBJS)
 
 fclean : clean
-	make -C ./libft fclean
 	rm -f $(NAME)
 
 re : fclean all
