@@ -1,8 +1,6 @@
 NAME = philo
 
-SRCS = validation.c utils.c main.c
-
-#SRCS = $(addprefix ./philo/, $(SRC_FILES))
+SRCS = validation.c utils.c init.c main.c
 
 OBJS = $(SRCS:.c=.o)
 

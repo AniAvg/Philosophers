@@ -6,55 +6,49 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:34:54 by anavagya          #+#    #+#             */
-/*   Updated: 2025/07/18 18:18:29 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/07/22 17:34:55 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	init(t_philo *philo, t_data *data, char **argv)
+void	*if_sb_is_dead(void *arg)
 {
-	int	i;
+	int		i;
+	long	time;
+	t_data	*data;
 
-	data->forks = malloc(sizeof(pthread_mutex_t) * data->philo_num);
-	if (!data->forks)
-		return ;
-	if (pthread_mutex_init(data->print_mutex, NULL) != 0)
-		return ;
-	// init program arguments
-	data->philo_num = ft_atoi(argv[1]);
-	data->time_to_die = ft_atoi(argv[2]);
-	data->time_to_eat = ft_atoi(argv[3]);
-	data->time_to_sleep = ft_atoi(argv[4]);
-	if (argv[5])
-		data->must_eat_count = ft_atoi(argv[5]);
-	else
-		data->must_eat_count = 0;
-	data->philo = malloc(sizeof(pthread_t) * data->philo_num);
-	// init data arguments
-	data->start_time = 0;
-	// init philo arguments
-	i = 0;
-	while ( i < data->philo_num)
+	data = (t_data *)arg;
+	while (!data->somebody_died)
 	{
-		if (pthread_mutex_init(&(data->philo[i].meal_time_mutex), NULL) != 0
-			|| pthread_mutex_init(&(data->forks[i]), NULL) != 0 )
-				return ;
-		data->philo[i].id = i;
-		data->philo[i].meal_count = 0;
-		data->philo[i].last_meal = 0;
-		i++;
+		i = 0;
+		while (i < data->philo_num)
+		{
+			pthread_mutex_lock(&data->philo[i].meal_time_mutex);
+			time = get_time_in_ms() - data->philo[i].last_meal;
+			if (time > data->time_to_die)
+			{
+				pthread_mutex_unlock(&data->philo[i].meal_time_mutex);
+				pthread_mutex_lock(&data->print_mutex);
+				data->somebody_died = 1;
+				printf("%ld %d died\n", time, data->philo[i].id + 1);
+				pthread_mutex_unlock(&data->print_mutex);
+				return (NULL);
+			}
+			pthread_mutex_unlock(&data->philo[i].meal_time_mutex);
+			i++;
+		}
+		usleep(500);
 	}
+	return (NULL);
 }
 
 void	pick_up_forks(t_philo *philo, t_data *data)
 {
-	philo->left_fork = philo->id;
-	if (philo->id == (data->philo_num - 1))
-		philo->right_fork = 0;
-	else
-		philo->right_fork = philo->id + 1;
+	if (philo->id % 2 == 0)
+		usleep(100);
 	pthread_mutex_lock(&(data->forks[philo->left_fork]));
+	print_status(philo, "has taken a fork");
 	pthread_mutex_lock(&(data->forks[philo->right_fork]));
 	print_status(philo, "has taken a fork");
 }
@@ -71,10 +65,9 @@ void	philo_eat(t_philo *philo)
 void	put_down_forks(t_philo *philo, t_data *data)//, long ms)
 {
 	//long	time;
-
 	pthread_mutex_unlock(&(data->forks[philo->right_fork]));
 	pthread_mutex_unlock(&(data->forks[philo->left_fork]));
-	print_status(philo, "puts down forks");
+	print_status(philo, "puts down forks");////////////////////////
 	// time = get_time_in_ms();
 	// while (get_time_in_ms() - time < ms)
 		// usleep(100);
@@ -105,9 +98,11 @@ void	*philosopher(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	// while (get_time_in_ms() < philo->data->start_time)
+	// 	usleep(50);
 	if (philo->id % 2 == 0)
-		usleep(1000);
-	while (1)
+		usleep(500);
+	while (!philo->data->somebody_died)
 	{
 		pick_up_forks(philo, philo->data);
 		philo_eat(philo);
@@ -115,6 +110,7 @@ void	*philosopher(void *arg)
 		philo_sleep(philo, philo->data->time_to_sleep);
 		philo_think(philo, 1);
 	}
+	return (NULL);
 }
 
 void	creating_threads(t_data *data)
@@ -125,11 +121,35 @@ void	creating_threads(t_data *data)
 	data->start_time = get_time_in_ms() + 100;
 	while (i < data->philo_num)
 	{
-		if (pthread_create(&data->philo->thread, NULL, philosopher, NULL) != 0)
+		data->philo[i].last_meal = data->start_time;
+		if (pthread_create(&data->philo[i].thread, NULL, philosopher, &data->philo[i]) != 0)
+		{
+			printf("Error creating thread %d\n", i);
 			return ;
-		if (pthread_join(data->philo->thread, NULL) != 0)
-			return ;
+		}
 		i++;
+	}
+	if (pthread_create(&data->philo_is_dead, NULL, if_sb_is_dead, data) != 0)
+	{
+		{
+			printf("Error creating death thread\n");
+			return ;
+		}
+	}
+	i = 0;
+	while (i < data->philo_num)
+	{
+		if (pthread_join(data->philo[i].thread, NULL) != 0)
+		{
+			printf("Error joining thread %d\n", i);
+			return ;
+		}
+		i++;
+	}
+	if (pthread_join(data->philo_is_dead, NULL) != 0)
+	{
+		printf("Error creating death thread\n");
+		return ;
 	}
 }
 
@@ -143,11 +163,11 @@ int	main(int argc, char **argv)
 	if (!validation(argc, argv))
 	{
 		free(data);
-		free(philo);
+		free(data->philo);
 		write(2, "Error\n", 6);
 		return (1);
 	}
-	init(philo, data, argv);
+	init(data, argv);
 	creating_threads(data);
 	return (0);
 }

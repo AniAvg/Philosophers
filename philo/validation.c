@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 14:33:48 by anavagya          #+#    #+#             */
-/*   Updated: 2025/07/22 16:08:11 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:15:16 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	is_digit(int argc, char **argv)
 		j = 0;
 		while (j < ft_strlen(argv[i]))
 		{
-			if (argv[i][j] < 48 || argv[i][j] > 57)
+			if (argv[i][j] < 48 && argv[i][j] > 57)
 				return (0);
 			j++;
 		}
