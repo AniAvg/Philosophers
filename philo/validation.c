@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 14:33:48 by anavagya          #+#    #+#             */
-/*   Updated: 2025/07/18 17:18:42 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:08:11 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ int	is_digit(int argc, char **argv)
 	int	j;
 
 	i = 0;
-	j = 0;
 	while (i < argc)
 	{
+		j = 0;
 		while (j < ft_strlen(argv[i]))
 		{
-			if (argv[i][j] < 48 && argv[i][j] > 57)
+			if (argv[i][j] < 48 || argv[i][j] > 57)
 				return (0);
 			j++;
 		}
@@ -62,6 +62,8 @@ int	ft_atoi(const char *str)
 	}
 	if (str[i] != '\0')
 		return (0);
+	if (result > INT_MAX)
+		return (0);
 	return (result);
 }
 
@@ -72,9 +74,6 @@ int	validation(int argc, char **argv)
 	i = 1;
 	if (argc < 5 || argc > 6)
 		return (0);
-	// num_arr = (int *)malloc(sizeof(int) * (argc - 1));
-	// if (!num_arr)
-	// 	return (0);
 	if (!is_digit(argc, argv))
 	{
 		return (0);
