@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 11:27:08 by anavagya          #+#    #+#             */
-/*   Updated: 2025/07/22 15:53:49 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/07/23 16:59:35 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ void	init_philo(t_data *data)
 		data->philo[i].id = i;
 		data->philo[i].meal_count = 0;
 		data->philo[i].last_meal = 0;
-		data->philo->left_fork = data->philo->id;
-		if (data->philo->id == (data->philo_num - 1))
-			data->philo->right_fork = 0;
+		data->philo[i].left_fork = data->philo[i].id;
+		if (data->philo[i].id == (data->philo_num - 1))
+			data->philo[i].right_fork = 0;
 		else
-			data->philo->right_fork = data->philo->id + 1;
+			data->philo[i].right_fork = data->philo[i].id + 1;
 		data->philo[i].data = data;
 		i++;
 	}
@@ -51,6 +51,8 @@ void	init(t_data *data, char **argv)
 		return ;
 	data->start_time = 0;
 	data->somebody_died = 0;
+	if (pthread_mutex_init(&data->death_mutex, NULL) != 0)
+		return ;
 	if (pthread_mutex_init(&data->print_mutex, NULL) != 0)
 		return ;
 	init_philo(data);

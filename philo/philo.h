@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:36:05 by anavagya          #+#    #+#             */
-/*   Updated: 2025/07/22 16:00:41 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/07/23 15:47:48 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_data
 	int				start_time;
 	int				somebody_died;
 	pthread_t		philo_is_dead;
-	pthread_mutex_t	sleep;//     init
+	pthread_mutex_t	death_mutex;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_mutex;
 	t_philo			*philo;
