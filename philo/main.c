@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:34:54 by anavagya          #+#    #+#             */
-/*   Updated: 2025/07/23 15:55:32 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/07/24 14:47:01 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,16 @@ void	pick_up_forks(t_philo *philo, t_data *data)
 	if (philo->id % 2 == 0)
 	{
 		// print_status(philo, "is_thinking");
-		// usleep(100);
-		pthread_mutex_lock(&(data->forks[philo->right_fork]));
-		print_status(philo, "has taken a fork");
-		// if (!data->somebody_died)
-		// {
-		// 	pthread_mutex_unlock(&(data->forks[philo->left_fork]));
-		// 	return ;
-		// }
-		pthread_mutex_lock(&(data->forks[philo->left_fork]));
-		print_status(philo, "has taken a fork");
+		usleep(500);
+		// pthread_mutex_lock(&(data->forks[philo->right_fork]));
+		// print_status(philo, "has taken a fork");
+		// // if (!data->somebody_died)
+		// // {
+		// // 	pthread_mutex_unlock(&(data->forks[philo->left_fork]));
+		// // 	return ;
+		// // }
+		// pthread_mutex_lock(&(data->forks[philo->left_fork]));
+		// print_status(philo, "has taken a fork");
 	}
 	else
 	{
@@ -83,11 +83,11 @@ void	pick_up_forks(t_philo *philo, t_data *data)
 
 void	philo_eat(t_philo *philo)
 {
+	print_status(philo, "is eating");
 	pthread_mutex_lock(&(philo->meal_time_mutex));
 	philo->last_meal = get_time_in_ms();
 	philo->meal_count++;
 	pthread_mutex_unlock(&(philo->meal_time_mutex));
-	print_status(philo, "is eating");
 }
 
 void	put_down_forks(t_philo *philo, t_data *data)//, long ms)
@@ -143,7 +143,7 @@ void	*philosopher(void *arg)
 		philo_eat(philo);
 		put_down_forks(philo, philo->data);//, data->time_to_sleep);
 		philo_sleep(philo, philo->data->time_to_sleep);
-		philo_think(philo, philo->data->time_to_die / 2);
+		philo_think(philo, philo->data->time_to_die / 4);
 	}
 	return (NULL);
 }
@@ -179,13 +179,11 @@ void	creating_threads(t_data *data)
 	i = 0;
 	while (i < data->philo_num)
 	{
-		printf("Byeeeeeeeeeeeeeeee\n");
 		if (pthread_join(data->philo[i].thread, NULL) != 0)
 		{
 			printf("Error joining thread %d\n", i);
 			return ;
 		}
-		printf("Heloooooooooooooooooooooooooooooo\n");
 		i++;
 	}
 	if (pthread_join(data->philo_is_dead, NULL) != 0)
