@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:36:05 by anavagya          #+#    #+#             */
-/*   Updated: 2025/07/23 15:47:48 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/07/25 15:47:43 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef struct s_data
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				must_eat_count;
-	int				start_time;
+	long			start_time;
 	int				somebody_died;
 	pthread_t		philo_is_dead;
 	pthread_mutex_t	death_mutex;
@@ -64,14 +64,18 @@ int		validation(int argc, char **argv);
 void	init_philo(t_data *data);
 void	init(t_data *data, char **argv);
 
+// simulation.c
+void	*philosopher(void *arg);
+
+// simulation_utils.c
+void	pick_up_forks(t_philo *philo, t_data *data);
+void	philo_eat(t_philo *philo);
+void	put_down_forks(t_philo *philo, t_data *data);
+void	philo_sleep(t_philo *philo, long ms);
+void	philo_think(t_philo *philo, long ms);
+
 // main.c
 void	*if_sb_is_dead(void *arg);
 void	creating_threads(t_data *data);
-void	pick_up_forks(t_philo *philo, t_data *data);
-void	philo_eat(t_philo *philo);
-void	put_down_forks(t_philo *philo, t_data *data);//, long ms);
-void	philo_sleep(t_philo *philo, long ms);
-void	philo_think(t_philo *philo, long ms);
-void	*philosopher(void *arg);
 
 #endif

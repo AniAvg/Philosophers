@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 11:27:08 by anavagya          #+#    #+#             */
-/*   Updated: 2025/07/24 14:44:03 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/07/25 14:46:37 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	init_philo(t_data *data)
 			|| pthread_mutex_init(&(data->forks[i]), NULL) != 0)
 			return ;
 		data->philo[i].id = i;
-		//data->philo[i].last_meal = data->start_time;
 		data->philo[i].meal_count = 0;
 		data->philo[i].last_meal = 0;
 		data->philo[i].left_fork = data->philo[i].id;

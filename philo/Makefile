@@ -1,11 +1,11 @@
 NAME = philo
 
-SRCS = validation.c utils.c init.c main.c
+SRCS = validation.c utils.c init.c simulation.c simulation_utils.c main.c
 
 OBJS = $(SRCS:.c=.o)
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g3
+CFLAGS = -Wall -Wextra -Werror #-fsanitize=thread
 
 all : $(NAME)
 
