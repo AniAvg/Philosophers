@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 14:55:43 by anavagya          #+#    #+#             */
-/*   Updated: 2025/07/25 17:27:56 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/07/28 16:28:58 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,6 @@ void	pick_up_forks(t_philo *philo, t_data *data)
 		usleep(200);
 	pthread_mutex_lock(&(data->forks[philo->left_fork]));
 	print_status(philo, "has taken a fork");
-	// if (!data->somebody_died)
-	// {
-	// 	pthread_mutex_unlock(&(data->forks[philo->left_fork]));
-	// 	return ;
-	// }
 	pthread_mutex_lock(&(data->forks[philo->right_fork]));
 	print_status(philo, "has taken a fork");
 }
