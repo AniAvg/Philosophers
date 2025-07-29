@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:36:05 by anavagya          #+#    #+#             */
-/*   Updated: 2025/07/28 15:11:28 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/07/29 17:50:32 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,10 @@ void	*philosopher(void *arg);
 
 // simulation_utils.c
 void	pick_up_forks(t_philo *philo, t_data *data);
-void	philo_eat(t_philo *philo);
+void	philo_eat(t_philo *philo, long ms);
 void	put_down_forks(t_philo *philo, t_data *data);
 void	philo_sleep(t_philo *philo, long ms);
-void	philo_think(t_philo *philo, long ms);
+void	philo_think(t_philo *philo);//, long ms);
 
 // main.c
 void	*if_sb_is_dead(void *arg);
