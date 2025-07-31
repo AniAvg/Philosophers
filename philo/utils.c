@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 16:19:09 by anavagya          #+#    #+#             */
-/*   Updated: 2025/07/28 14:05:35 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/07/31 17:59:00 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,40 @@ long	get_time_in_ms(void)
 
 	gettimeofday(&time, NULL);
 	return ((time.tv_sec * (int)1000) + (time.tv_usec / 1000));
+}
+
+void	cleanup_philo(t_philo *philo)
+{
+	int	i;
+
+	if (philo)
+	{
+		i = 0;
+		while (i < philo->data->philo_num)
+		{
+			pthread_mutex_destroy(&philo[i].meal_time_mutex);
+			i++;
+		}
+	}
+	if (philo)
+		free(philo);
+}
+
+void	cleanup(t_data *data)
+{
+	int	i;
+
+	if (data->forks)
+	{
+		i = 0;
+		while (i < data->philo_num)
+		{
+			pthread_mutex_destroy(&data->forks[i]);
+			i++;
+		}
+		free(data->forks);
+	}
+	pthread_mutex_destroy(&data->death_mutex);
+	pthread_mutex_destroy(&data->print_mutex);
+	cleanup_philo(data->philo);
 }

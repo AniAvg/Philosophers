@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:36:05 by anavagya          #+#    #+#             */
-/*   Updated: 2025/07/29 17:50:32 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/07/31 18:53:34 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_data
 	int				must_eat_count;
 	long			start_time;
 	int				somebody_died;
+	int				diner_is_over;
 	pthread_t		philo_is_dead;
 	pthread_mutex_t	death_mutex;
 	pthread_mutex_t	*forks;
@@ -53,10 +54,12 @@ typedef struct s_data
 // utils.c
 void	print_status(t_philo *philo, char *msg);
 long	get_time_in_ms(void);
+void	cleanup_philo(t_philo *philo);
+void	cleanup(t_data *data);
 
 // validation.c
 int		ft_strlen(char *str);
-int		is_digit(int argc, char **argv);
+int		is_number(int argc, char **argv);
 int		ft_atoi(const char *str);
 int		validation(int argc, char **argv);
 
@@ -72,7 +75,7 @@ void	pick_up_forks(t_philo *philo, t_data *data);
 void	philo_eat(t_philo *philo, long ms);
 void	put_down_forks(t_philo *philo, t_data *data);
 void	philo_sleep(t_philo *philo, long ms);
-void	philo_think(t_philo *philo);//, long ms);
+void	philo_think(t_philo *philo, long ms);
 
 // main.c
 void	*if_sb_is_dead(void *arg);

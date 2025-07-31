@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:34:54 by anavagya          #+#    #+#             */
-/*   Updated: 2025/07/29 18:08:45 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/07/31 17:39:30 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,14 +100,14 @@ int	main(int argc, char **argv)
 		return (1);
 	if (!validation(argc, argv))
 	{
-		free(data);
 		free(data->philo);
+		free(data);
 		write(2, "Error\n", 6);
 		return (1);
 	}
 	init(data, argv);
 	creating_threads(data);
-	free(data->philo);
+	cleanup(data);
 	free(data);
 	return (0);
 }

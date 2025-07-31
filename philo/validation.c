@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 14:33:48 by anavagya          #+#    #+#             */
-/*   Updated: 2025/07/28 15:11:24 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/07/31 18:49:00 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,20 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-int	is_digit(int argc, char **argv)
+int	is_number(int argc, char **argv)
 {
 	int	i;
 	int	j;
 
-	i = 0;
+	i = 1;
 	while (i < argc)
 	{
 		j = 0;
 		while (j < ft_strlen(argv[i]))
 		{
-			if (argv[i][j] < 48 && argv[i][j] > 57)
+			if (argv[i][0] == '0')
+				return (0);
+			if (!(argv[i][j] >= 48 && argv[i][j] <= 57))
 				return (0);
 			j++;
 		}
@@ -74,7 +76,7 @@ int	validation(int argc, char **argv)
 	i = 1;
 	if (argc < 5 || argc > 6)
 		return (0);
-	if (!is_digit(argc, argv))
+	if (!is_number(argc, argv))
 	{
 		return (0);
 	}

@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 11:27:08 by anavagya          #+#    #+#             */
-/*   Updated: 2025/07/25 14:46:37 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/07/31 18:29:03 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	init(t_data *data, char **argv)
 		return ;
 	data->start_time = 0;
 	data->somebody_died = 0;
+	data->diner_is_over = 0;
 	if (pthread_mutex_init(&data->death_mutex, NULL) != 0)
 		return ;
 	if (pthread_mutex_init(&data->print_mutex, NULL) != 0)
