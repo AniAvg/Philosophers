@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:34:54 by anavagya          #+#    #+#             */
-/*   Updated: 2025/07/31 17:39:30 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/08/01 12:16:40 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,13 @@ void	*if_sb_is_dead(void *arg)
 			pthread_mutex_unlock(&data->philo[i].meal_time_mutex);
 			i++;
 		}
-		usleep(100);
+		if (data->philo->meal_count == data->must_eat_count)
+		{
+			pthread_mutex_lock(&data->death_mutex);
+			data->diner_is_over = 1;
+			pthread_mutex_unlock(&data->death_mutex);
+			return (NULL);
+		}
 	}
 	return (NULL);
 }
