@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 11:25:20 by anavagya          #+#    #+#             */
-/*   Updated: 2025/08/06 13:53:49 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/08/06 18:01:22 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ void	*philosopher(void *arg)
 		if (philo->data->must_eat_count > 0
 			&& meal_count >= philo->data->must_eat_count)
 		{
-			pthread_mutex_lock(&(philo->meal_lock));
+			pthread_mutex_lock(&(philo->data->death_mutex));
 			philo->data->diner_is_over = 1;
-			pthread_mutex_unlock(&(philo->meal_lock));
+			pthread_mutex_unlock(&(philo->data->death_mutex));
 			return (0);
 		}
 		philo_sleep(philo, philo->data->time_to_sleep);

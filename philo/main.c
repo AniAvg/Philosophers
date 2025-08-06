@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:34:54 by anavagya          #+#    #+#             */
-/*   Updated: 2025/08/06 13:48:02 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/08/06 18:18:04 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	*if_sb_is_dead(void *arg)
 			return (NULL);
 		}
 		pthread_mutex_unlock(&(data->philo->meal_lock));
-
 	}
 	return (NULL);
 }
@@ -110,7 +109,6 @@ int	main(int argc, char **argv)
 		return (1);
 	if (!validation(argc, argv))
 	{
-		free(data->philo);
 		free(data);
 		write(2, "Error\n", 6);
 		return (1);
