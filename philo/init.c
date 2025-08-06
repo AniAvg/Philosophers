@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 11:27:08 by anavagya          #+#    #+#             */
-/*   Updated: 2025/07/31 18:29:03 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/08/06 13:45:46 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	init_philo(t_data *data)
 	i = 0;
 	while (i < data->philo_num)
 	{
-		if (pthread_mutex_init(&(data->philo[i].meal_time_mutex), NULL) != 0
+		if (pthread_mutex_init(&(data->philo[i].meal_lock), NULL) != 0
 			|| pthread_mutex_init(&(data->forks[i]), NULL) != 0)
 			return ;
 		data->philo[i].id = i;

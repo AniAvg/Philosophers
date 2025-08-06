@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:36:05 by anavagya          #+#    #+#             */
-/*   Updated: 2025/07/31 18:53:34 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/08/06 13:45:32 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_philo
 	int				left_fork;
 	int				right_fork;
 	pthread_t		thread;
-	pthread_mutex_t	meal_time_mutex;
+	pthread_mutex_t	meal_lock;
 	t_data			*data;
 }	t_philo;
 

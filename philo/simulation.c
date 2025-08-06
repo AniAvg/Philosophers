@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 11:25:20 by anavagya          #+#    #+#             */
-/*   Updated: 2025/08/01 11:47:08 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/08/06 13:53:49 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	*philosopher(void *arg)
 {
 	t_philo	*philo;
+	int		meal_count;
 
 	philo = (t_philo *)arg;
 	while (get_time_in_ms() < philo->data->start_time)
@@ -33,12 +34,15 @@ void	*philosopher(void *arg)
 		pick_up_forks(philo, philo->data);
 		philo_eat(philo, philo->data->time_to_eat);
 		put_down_forks(philo, philo->data);
+		pthread_mutex_lock(&(philo->meal_lock));
+		meal_count = philo->meal_count;
+		pthread_mutex_unlock(&(philo->meal_lock));
 		if (philo->data->must_eat_count > 0
-			&& philo->meal_count >= philo->data->must_eat_count)
+			&& meal_count >= philo->data->must_eat_count)
 		{
-			pthread_mutex_lock(&philo->meal_time_mutex);
+			pthread_mutex_lock(&(philo->meal_lock));
 			philo->data->diner_is_over = 1;
-			pthread_mutex_unlock(&philo->meal_time_mutex);
+			pthread_mutex_unlock(&(philo->meal_lock));
 			return (0);
 		}
 		philo_sleep(philo, philo->data->time_to_sleep);

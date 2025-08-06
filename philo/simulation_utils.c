@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 14:55:43 by anavagya          #+#    #+#             */
-/*   Updated: 2025/08/01 13:06:25 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/08/06 13:45:40 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ void	philo_eat(t_philo *philo, long ms)
 	long	time;
 
 	print_status(philo, "is eating");
-	pthread_mutex_lock(&(philo->meal_time_mutex));
+	pthread_mutex_lock(&(philo->meal_lock));
 	philo->last_meal = get_time_in_ms();
 	philo->meal_count++;
 	time = get_time_in_ms();
-	pthread_mutex_unlock(&(philo->meal_time_mutex));
+	pthread_mutex_unlock(&(philo->meal_lock));
 	while (get_time_in_ms() - time < ms)
 		usleep(100);
 }

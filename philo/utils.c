@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 16:19:09 by anavagya          #+#    #+#             */
-/*   Updated: 2025/07/31 17:59:00 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/08/06 13:45:57 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	cleanup_philo(t_philo *philo)
 		i = 0;
 		while (i < philo->data->philo_num)
 		{
-			pthread_mutex_destroy(&philo[i].meal_time_mutex);
+			pthread_mutex_destroy(&philo[i].meal_lock);
 			i++;
 		}
 	}
