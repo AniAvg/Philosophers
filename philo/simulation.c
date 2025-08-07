@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 11:25:20 by anavagya          #+#    #+#             */
-/*   Updated: 2025/08/06 18:01:22 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/08/07 18:24:19 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	*philosopher(void *arg)
 	{
 		pthread_mutex_lock(&philo->data->death_mutex);
 		if (philo->data->somebody_died)
-		{
+		{ 
 			pthread_mutex_unlock(&philo->data->death_mutex);
 			break ;
 		}

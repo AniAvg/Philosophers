@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:36:05 by anavagya          #+#    #+#             */
-/*   Updated: 2025/08/06 13:45:32 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/08/07 18:02:14 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,6 @@ void	philo_think(t_philo *philo, long ms);
 // main.c
 void	*if_sb_is_dead(void *arg);
 void	creating_threads(t_data *data);
+void	one_philo(t_philo *philo);
 
 #endif
