@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:36:05 by anavagya          #+#    #+#             */
-/*   Updated: 2025/08/07 18:02:14 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/08/08 18:56:47 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,9 @@ void	init_philo(t_data *data);
 void	init(t_data *data, char **argv);
 
 // simulation.c
+int		check_death(t_philo *philo);
+int		check_meal_count(t_philo *philo, int meal_count);
+void	eating(t_philo *philo);
 void	*philosopher(void *arg);
 
 // simulation_utils.c
@@ -77,9 +80,14 @@ void	put_down_forks(t_philo *philo, t_data *data);
 void	philo_sleep(t_philo *philo, long ms);
 void	philo_think(t_philo *philo, long ms);
 
-// main.c
+// death.c
+int		is_meal_limit_reached(t_data *data);
+int		check_philo_death(t_data *data, long time, int i);
 void	*if_sb_is_dead(void *arg);
+
+// main.c
+void	joining_threads(t_data *data);
 void	creating_threads(t_data *data);
-void	one_philo(t_philo *philo);
+void	*one_philo(t_philo *philo);
 
 #endif

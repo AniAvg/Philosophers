@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 14:55:43 by anavagya          #+#    #+#             */
-/*   Updated: 2025/08/06 13:45:40 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/08/08 18:02:47 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	pick_up_forks(t_philo *philo, t_data *data)
 		print_status(philo, "has taken a fork");
 		print_status(philo, "has taken a fork");
 	}
-	// usleep(200);//200
 	else
 	{
 		pthread_mutex_lock(&(data->forks[philo->left_fork]));
@@ -47,7 +46,6 @@ void	philo_eat(t_philo *philo, long ms)
 
 void	put_down_forks(t_philo *philo, t_data *data)
 {
-
 	if (philo->id % 2 == 0)
 	{
 		pthread_mutex_unlock(&(data->forks[philo->left_fork]));
