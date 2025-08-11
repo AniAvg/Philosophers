@@ -5,7 +5,8 @@ SRCS = validation.c utils.c init.c simulation.c simulation_utils.c death.c main.
 OBJS = $(SRCS:.c=.o)
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror -g3 -pthread
+#-fsanitize=thread
 
 all : $(NAME)
 

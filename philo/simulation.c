@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 11:25:20 by anavagya          #+#    #+#             */
-/*   Updated: 2025/08/08 18:33:22 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/08/11 18:11:57 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ void	*philosopher(void *arg)
 
 	philo = (t_philo *)arg;
 	while (get_time_in_ms() < philo->data->start_time)
-		usleep(100);
+		usleep(50);
 	if (philo->id % 2 == 0)
-		usleep(100);
+		usleep(1000);
 	while (1)
 	{
 		if (check_death(philo))
