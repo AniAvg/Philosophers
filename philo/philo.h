@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 16:36:05 by anavagya          #+#    #+#             */
-/*   Updated: 2025/08/08 18:56:47 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/08/12 14:03:35 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,14 +80,16 @@ void	put_down_forks(t_philo *philo, t_data *data);
 void	philo_sleep(t_philo *philo, long ms);
 void	philo_think(t_philo *philo, long ms);
 
+// one_philo.c
+void	*one_philo(t_philo *philo);
+
 // death.c
-int		is_meal_limit_reached(t_data *data);
+int		is_meal_limit_reached(t_data *data, int i);
 int		check_philo_death(t_data *data, long time, int i);
 void	*if_sb_is_dead(void *arg);
 
 // main.c
 void	joining_threads(t_data *data);
 void	creating_threads(t_data *data);
-void	*one_philo(t_philo *philo);
 
 #endif

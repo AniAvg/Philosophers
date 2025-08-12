@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 11:25:20 by anavagya          #+#    #+#             */
-/*   Updated: 2025/08/11 18:11:57 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/08/12 14:34:43 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	*philosopher(void *arg)
 			return (NULL);
 		philo_sleep(philo, philo->data->time_to_sleep);
 		philo_think(philo, 1);
+	
 	}
 	return (NULL);
 }

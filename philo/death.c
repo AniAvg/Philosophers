@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 18:39:53 by anavagya          #+#    #+#             */
-/*   Updated: 2025/08/12 11:15:11 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/08/12 14:05:45 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,18 @@ int	check_philo_death(t_data *data, long time, int i)
 	return (0);
 }
 
-int	is_meal_limit_reached(t_data *data)
+int	is_meal_limit_reached(t_data *data, int i)
 {
-	pthread_mutex_lock(&(data->philo->meal_lock));
-	if (data->philo->meal_count == data->must_eat_count)
+	pthread_mutex_lock(&(data->philo[i].meal_lock));
+	if (data->philo[i].meal_count == data->must_eat_count)
 	{
 		pthread_mutex_lock(&data->death_mutex);
 		data->diner_is_over = 1;
 		pthread_mutex_unlock(&data->death_mutex);
-		pthread_mutex_unlock(&(data->philo->meal_lock));
+		pthread_mutex_unlock(&(data->philo[i].meal_lock));
 		return (1);
 	}
-	pthread_mutex_unlock(&(data->philo->meal_lock));
+	pthread_mutex_unlock(&(data->philo[i].meal_lock));
 	return (0);
 }
 
@@ -67,10 +67,10 @@ void	*if_sb_is_dead(void *arg)
 			if (check_philo_death(data, time, i))
 				return (NULL);
 			pthread_mutex_unlock(&data->philo[i].meal_lock);
+			if (is_meal_limit_reached(data, i))
+				return (NULL);
 			i++;
 		}
-		if (is_meal_limit_reached(data))
-			return (NULL);
 	}
 	return (NULL);
 }

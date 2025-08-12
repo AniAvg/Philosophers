@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 14:55:43 by anavagya          #+#    #+#             */
-/*   Updated: 2025/08/12 10:57:04 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/08/12 14:28:16 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	philo_sleep(t_philo *philo, long ms)
 {
 	long	time;
 
-	// usleep(100);
 	time = get_time_in_ms();
 	print_status(philo, "is sleeping");
 	while (get_time_in_ms() - time < ms - 1)
