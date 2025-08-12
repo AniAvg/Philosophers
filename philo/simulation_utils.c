@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 14:55:43 by anavagya          #+#    #+#             */
-/*   Updated: 2025/08/11 18:19:33 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/08/12 10:57:04 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,13 @@ void	philo_eat(t_philo *philo, long ms)
 	long	time;
 
 	print_status(philo, "is eating");
-	time = get_time_in_ms();
-	while (get_time_in_ms() - time < ms)
-		usleep(500);
 	pthread_mutex_lock(&(philo->meal_lock));
 	philo->last_meal = get_time_in_ms();
 	philo->meal_count++;
-	// time = get_time_in_ms();
+	time = get_time_in_ms();
 	pthread_mutex_unlock(&(philo->meal_lock));
+	while (get_time_in_ms() - time < ms)
+		usleep(500);
 }
 
 void	put_down_forks(t_philo *philo, t_data *data)

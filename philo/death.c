@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 18:39:53 by anavagya          #+#    #+#             */
-/*   Updated: 2025/08/11 18:17:48 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/08/12 11:15:11 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ void	*if_sb_is_dead(void *arg)
 			pthread_mutex_unlock(&data->philo[i].meal_lock);
 			i++;
 		}
-		// usleep(1000);
 		if (is_meal_limit_reached(data))
 			return (NULL);
 	}
