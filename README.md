@@ -16,6 +16,7 @@ It focuses on **multithreading**, **mutex synchronization**, and **avoiding race
 - After finishing eating, the philosopher puts their forks back and starts sleeping. Once awake, they start thinking again.  
 - The simulation stops when a philosopher dies of starvation (fails to eat in time).
 
+
 ---
 
 ## 📜 Program Arguments
