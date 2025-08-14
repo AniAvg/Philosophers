@@ -6,7 +6,7 @@
 /*   By: anavagya <anavgya@student.42.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 18:39:53 by anavagya          #+#    #+#             */
-/*   Updated: 2025/08/12 14:05:45 by anavagya         ###   ########.fr       */
+/*   Updated: 2025/08/14 15:39:02 by anavagya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	*if_sb_is_dead(void *arg)
 	while (1)
 	{
 		i = 0;
+		usleep(100);
 		while (i < data->philo_num)
 		{
 			pthread_mutex_lock(&data->philo[i].meal_lock);
